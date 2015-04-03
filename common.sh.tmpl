@@ -3,6 +3,7 @@
 ##################
 
 OS=Unknown
+DISTRO=Unknown
 
 OSNAME="$(uname -s)"
 case $OSNAME in
@@ -11,10 +12,9 @@ Linux)
   ;;
 Darwin)
   OS=OSX
+  DISTRO=OSX
   ;;
 esac
-
-DISTRO=Unknown
 
 if [ -f "/etc/issue" ]; then
   ISSUE="$(< /etc/issue)"

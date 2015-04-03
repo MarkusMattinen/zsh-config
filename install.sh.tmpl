@@ -1,9 +1,55 @@
-sudo git clone git@github.com:tarjoilija/zgen.git /usr/local/share/zgen
+set -eo pipefail
 
-[ -f "~/.zshrc" ] && mv ~/.zshrc ~/.zshrc.bak.$(date +%s)
+brew_install() {
+  has brew || ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  has brew || (echo Failed to install HomeBrew. && exit 1)
+  brew install $@
+}
 
-> ~/.zshrc <<END
-source /usr/share/zgen/zgen.zsh
+pacman_install() {
+  sudo -nv 2>&1 | egrep ".*may not run sudo.*" && exit 1 || true
+  sudo pacman -Sy $@
+}
+
+apt_install() {
+  sudo -nv 2>&1 | egrep ".*may not run sudo.*" && exit 1 || true
+  sudo apt-get update && apt-get install --no-install-recommends -y $@
+}
+
+has() {
+  which $@ &>/dev/null
+}
+
+case $DISTRO in
+OSX)
+  has git || brew_install git
+  has zsh || brew_install zsh
+  ;;
+ArchLinux)
+  has git || pacman_install git
+  has zsh || pacman_install zsh
+  ;;
+Debian | Ubuntu)
+  has git || apt_install git-core
+  has zsh || apt_install zsh
+  ;;
+esac
+
+has git || (echo Failed to install git. Exiting. && exit 1)
+has zsh || (echo Failed to install zsh. Exiting. && exit 1)
+
+[ "$SHELL" = "$(which zsh)" ] || chsh -s $(which zsh)
+
+ZGEN_DIR=~/.local/share/zgen
+ZSHRC=~/.zshrc
+
+[ -d "${ZGEN_DIR}" ] || git clone https://github.com/tarjoilija/zgen.git ${ZGEN_DIR}
+chmod -R go-w ${ZGEN_DIR}
+
+[ -f "${ZSHRC}" ] && mv ${ZSHRC} ${ZSHRC}.bak.$(date +%s)
+
+> ${ZSHRC} <<END
+source ${ZGEN_DIR}/zgen.zsh
 
 if ! zgen saved; then
     zgen load markusmattinen/zsh-config
