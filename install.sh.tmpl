@@ -1,23 +1,42 @@
 set -eo pipefail
 
-brew_install() {
-  has brew || ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-  has brew || (echo Failed to install HomeBrew. && exit 1)
-  brew install $@
-}
-
-pacman_install() {
-  sudo -nv 2>&1 | egrep ".*may not run sudo.*" && exit 1 || true
-  sudo pacman -Sy $@
-}
-
-apt_install() {
-  sudo -nv 2>&1 | egrep ".*may not run sudo.*" && exit 1 || true
-  sudo apt-get update && sudo apt-get install --no-install-recommends -y $@
+exit_error() {
+  echo $@
+  exit 1
 }
 
 has() {
   which $@ &>/dev/null
+}
+
+has_sudo() {
+  sudo -nv 2>&1 | egrep ".*may not run sudo.*" &>/dev/null && return 1 || return 0
+}
+
+brew_install() {
+  has $1 && return 0
+  has ruby || exit_error Ruby is not available. Unable to install HomeBrew.
+  has brew || ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  has brew || exit_error Failed to install HomeBrew.
+  brew install $1
+}
+
+PACMAN_UPDATED=0
+pacman_install() {
+  has $1 && return 0
+  has_sudo || exit_error Sudo is not available.
+  [ $PACMAN_UPDATED -eq 1 ] || sudo pacman -Sy
+  PACMAN_UPDATED=1
+  sudo pacman -S $1
+}
+
+APT_GET_UPDATED=0
+apt_install() {
+  has $1 && return 0
+  has_sudo || exit_error Sudo is not available.
+  [ $APT_GET_UPDATED -eq 1 ] || sudo apt-get update
+  APT_GET_UPDATED=1
+  sudo apt-get install --no-install-recommends -y $1
 }
 
 case $DISTRO in
@@ -35,10 +54,16 @@ Debian | Ubuntu)
   ;;
 esac
 
-has git || (echo Failed to install git. Exiting. && exit 1)
-has zsh || (echo Failed to install zsh. Exiting. && exit 1)
+has git || exit_error Failed to install git.
+has zsh || exit_error Failed to install zsh.
 
-[ "$SHELL" = "$(which zsh)" ] || chsh -s $(which zsh)
+if ! [ "$SHELL" = "$(which zsh)" ]; then
+  if has_sudo; then
+    sudo chsh -s $(which zsh) $(whoami)
+  else
+    echo chsh -s $(which zsh) || echo Unable to change shell for $(whoami). Please run the following command manually: && echo chsh -s $(which zsh)
+  fi
+fi
 
 ZGEN_DIR=~/.local/share/zgen
 ZSHRC=~/.zshrc
@@ -59,4 +84,4 @@ if ! zgen saved; then
 fi
 END
 
-has zgen && zgen update
+zsh -c "source ${ZSHRC} && which zgen &>/dev/null && zgen update"
