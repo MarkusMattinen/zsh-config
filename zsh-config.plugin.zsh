@@ -1,35 +1,12 @@
-##################
-## OS DETECTION ##
-##################
+#!/bin/zsh
 
-OS=Unknown
+function finalize() {
+  popd &>/dev/null
+}
 
-OSNAME="$(uname -s)"
-case $OSNAME in
-Linux)
-  OS=Linux
-  ;;
-Darwin)
-  OS=OSX
-  ;;
-esac
+pushd $(dirname $0) &>/dev/null && trap finalize EXIT
 
-DISTRO=Unknown
-
-if [ -f "/etc/issue" ]; then
-  ISSUE="$(< /etc/issue)"
-  case $ISSUE in
-  Arch\ Linux*)
-    DISTRO=ArchLinux
-    ;;
-  Rasbian* | Debian)
-    DISTRO=Debian
-    ;;
-  Ubuntu*)
-    DISTRO=Ubuntu
-    ;;
-  esac
-fi
+source common.zsh
 
 ##################
 ## ZSH OPTIONS ###
