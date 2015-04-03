@@ -34,8 +34,6 @@ if [ -f "/etc/issue" ]; then
   esac
 fi
 
-set -eo pipefail
-
 exit_error() {
   echo $@
   exit 1
@@ -48,6 +46,8 @@ has() {
 has_sudo() {
   sudo -nv 2>&1 | egrep ".*may not run sudo.*" &>/dev/null && return 1 || return 0
 }
+
+set -eo pipefail
 
 brew_install() {
   has $1 && return 0

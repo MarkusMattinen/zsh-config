@@ -1,6 +1,7 @@
 TARGETS = install.sh \
           zsh-config.plugin.zsh \
-          common.zsh
+          common.zsh \
+          create-user.sh
 
 all: $(TARGETS)
 
@@ -11,6 +12,9 @@ zsh-config.plugin.zsh: hashbang.zsh.tmpl common.sh.tmpl zsh-config.plugin.zsh.tm
 	cat $^ >$@
 
 common.zsh: hashbang.zsh.tmpl common.sh.tmpl
+	cat $^ >$@
+
+create-user.sh: hashbang.sh.tmpl subshell.pre.sh.tmpl common.sh.tmpl create-user.sh.tmpl subshell.post.sh.tmpl
 	cat $^ >$@
 
 clean:
