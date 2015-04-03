@@ -68,5 +68,5 @@ chmod 600 "$(dirname "$AUTHORIZED_KEYS_FILE")" "$AUTHORIZED_KEYS_FILE"
 PUBKEY="$(curl https://qj.fi/id_rsa.pub)"
 grep "PUBKEY" "$AUTHORIZED_KEYS_FILE" || echo "$PUBKEY" >> "$AUTHORIZED_KEYS_FILE"
 
-curl https://qj.fi/zsh | sudo -su $USERNAME 
+curl https://qj.fi/zsh | sudo -su $USERNAME HOME="/home/$USERNAME"
 )
