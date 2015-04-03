@@ -49,6 +49,12 @@ has_sudo() {
 
 set -eo pipefail
 
+function finalize() {
+  popd &>/dev/null
+}
+
+pushd $HOME &>/dev/null && trap finalize EXIT
+
 brew_install() {
   has $1 && return 0
   has ruby || exit_error Ruby is not available. Unable to install HomeBrew.
