@@ -72,9 +72,7 @@ ZSHRC=~/.zshrc
 [ -d "${ZGEN_DIR}" ] || git clone https://github.com/tarjoilija/zgen.git ${ZGEN_DIR}
 chmod -R go-w ${ZGEN_DIR}
 
-[ -f "${ZSHRC}" ] && mv ${ZSHRC} ${ZSHRC}.bak.$(date +%s)
-
-cat > ${ZSHRC} <<END
+cat > ${ZSHRC}.new <<END
 source ${ZGEN_DIR}/zgen.zsh
 
 if ! zgen saved; then
@@ -84,5 +82,8 @@ if ! zgen saved; then
     zgen save
 fi
 END
+
+grep markusmattinen ${ZSHRC} &>/dev/null || mv ${ZSHRC} ${ZSHRC}.bak.$(date +%s) &>/dev/null
+mv ${ZSHRC}.new ${ZSHRC}
 
 zsh -c "source ${ZSHRC} && which zgen &>/dev/null && zgen update"
