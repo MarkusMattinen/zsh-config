@@ -13,7 +13,7 @@ pacman_install() {
 
 apt_install() {
   sudo -nv 2>&1 | egrep ".*may not run sudo.*" && exit 1 || true
-  sudo apt-get update && apt-get install --no-install-recommends -y $@
+  sudo apt-get update && sudo apt-get install --no-install-recommends -y $@
 }
 
 has() {
