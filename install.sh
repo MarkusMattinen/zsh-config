@@ -94,4 +94,6 @@ if ! zgen saved; then
     zgen save
 fi
 END
+
+has zgen && zgen update
 )
