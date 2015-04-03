@@ -48,7 +48,7 @@ chmod -R go-w ${ZGEN_DIR}
 
 [ -f "${ZSHRC}" ] && mv ${ZSHRC} ${ZSHRC}.bak.$(date +%s)
 
-> ${ZSHRC} <<END
+cat > ${ZSHRC} <<END
 source ${ZGEN_DIR}/zgen.zsh
 
 if ! zgen saved; then
