@@ -132,7 +132,7 @@ if ! zgen saved; then
 fi
 END
 
-grep markusmattinen ${ZSHRC} &>/dev/null || mv ${ZSHRC} ${ZSHRC}.bak.$(date +%s) &>/dev/null
+grep markusmattinen ${ZSHRC} &>/dev/null || mv ${ZSHRC} ${ZSHRC}.bak.$(date +%s) &>/dev/null || true
 mv ${ZSHRC}.new ${ZSHRC}
 
 zsh -c "source ${ZSHRC} && which zgen &>/dev/null && zgen update"
