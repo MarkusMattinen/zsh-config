@@ -101,9 +101,6 @@ Debian | Ubuntu)
   ;;
 esac
 
-has git || exit_error Failed to install git.
-has zsh || exit_error Failed to install zsh.
-
 if ! [ "$SHELL" = "$(which zsh)" ]; then
   if has_sudo; then
     sudo chsh -s $(which zsh) $(whoami)
