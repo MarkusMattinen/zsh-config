@@ -46,13 +46,6 @@ has_sudo() {
   sudo -nv 2>&1 | egrep ".*may not run sudo.*" &>/dev/null && return 1 || return 0
 }
 
-function finalize() {
-  popd &>/dev/null
-}
-
-pushd $(dirname $0) &>/dev/null && trap finalize EXIT
-
-source common.zsh
 
 ##################
 ## ZSH OPTIONS ###
