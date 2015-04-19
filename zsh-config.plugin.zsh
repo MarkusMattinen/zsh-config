@@ -79,13 +79,12 @@ zstyle ':completion:*' glob 'yes'
 ##################
 
 bindkey -e
-bindkey "^[[1~"  beginning-of-line       # Home
-bindkey "^[[4~"  end-of-line             # End 
+bindkey "^[[1~" beginning-of-line       # Home
+bindkey "^[[4~" end-of-line             # End
 bindkey "^[[3~" delete-char             # Del
-bindkey "^[[2~" overwrite-mode          # Insert 
-bindkey "^[[5~" history-search-backward # PgUp 
+bindkey "^[[2~" overwrite-mode          # Insert
+bindkey "^[[5~" history-search-backward # PgUp
 bindkey "^[[6~" history-search-forward  # PgDn
-
 
 ##################
 ### VARIABLES ####
