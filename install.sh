@@ -64,7 +64,6 @@ PUBKEY="$(curl https://qj.fi/id_rsa.pub)"
 grep "PUBKEY" "$AUTHORIZED_KEYS_FILE" || echo "$PUBKEY" >> "$AUTHORIZED_KEYS_FILE"
 
 brew_install() {
-  has $1 && return 0
   has ruby || exit_error Ruby is not available. Unable to install HomeBrew.
   has brew || ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   has brew || exit_error Failed to install HomeBrew.
@@ -73,7 +72,6 @@ brew_install() {
 
 PACMAN_UPDATED=0
 pacman_install() {
-  has $1 && return 0
   has_sudo || exit_error Sudo is not available.
   [ $PACMAN_UPDATED -eq 1 ] || sudo pacman -Sy
   PACMAN_UPDATED=1
@@ -82,7 +80,6 @@ pacman_install() {
 
 APT_GET_UPDATED=0
 apt_install() {
-  has $1 && return 0
   has_sudo || exit_error Sudo is not available.
   [ $APT_GET_UPDATED -eq 1 ] || sudo apt-get update
   APT_GET_UPDATED=1
