@@ -70,6 +70,12 @@ brew_install() {
   brew install $1
 }
 
+cask_install() {
+  has brew-cask || brew_install caskroom/cask/brew-cask
+  has brew-cask || exit_error Failed to install HomeBrew.
+  brew cask install $1
+}
+
 PACMAN_UPDATED=0
 pacman_install() {
   has_sudo || exit_error Sudo is not available.
@@ -86,18 +92,36 @@ apt_install() {
   sudo apt-get install --no-install-recommends -y $1
 }
 
+npm_install() {
+  has npm || exit_error Node.js is not installed.
+  npm install -g $1
+}
+
 case $DISTRO in
 OSX)
   has git || brew_install git
   has zsh || brew_install zsh
+  has htop || brew_install htop
+  has gpg-agent || brew_install gpg-agent
+  has convert || brew_install imagemagick
+  has node || brew_install node
+  has bower || npm_install bower
   ;;
 ArchLinux)
   has git || pacman_install git
   has zsh || pacman_install zsh
+  has htop || pacman_install htop
+  has gpg-agent || pacman_install gpg-agent
+  has tmux || pacman_install tmux
+  has convert || pacman_install imagemagick
   ;;
 Debian | Ubuntu)
   has git || apt_install git-core
   has zsh || apt_install zsh
+  has htop || apt_install htop
+  has gpg-agent || apt_install gpg-agent
+  has tmux || apt_install tmux
+  has convert || apt_install imagemagick
   ;;
 esac
 
