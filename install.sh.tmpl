@@ -57,6 +57,7 @@ OSX)
   has convert || brew_install imagemagick
   has node || brew_install node
   has bower || npm_install bower
+  has fasd || brew_install fasd
   ;;
 ArchLinux)
   has git || pacman_install git
@@ -65,6 +66,7 @@ ArchLinux)
   has gpg-agent || pacman_install gpg-agent
   has tmux || pacman_install tmux
   has convert || pacman_install imagemagick
+  has fasd || pacman_install fasd
   ;;
 Debian | Ubuntu)
   has git || apt_install git-core
@@ -73,6 +75,7 @@ Debian | Ubuntu)
   has gpg-agent || apt_install gpg-agent
   has tmux || apt_install tmux
   has convert || apt_install imagemagick
+  has fasd || apt_install fasd
   ;;
 esac
 
