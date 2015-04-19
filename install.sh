@@ -81,7 +81,7 @@ pacman_install() {
   has_sudo || exit_error Sudo is not available.
   [ $PACMAN_UPDATED -eq 1 ] || sudo pacman -Sy
   PACMAN_UPDATED=1
-  sudo pacman -S $1
+  sudo pacman -S --noconfirm $1
 }
 
 APT_GET_UPDATED=0
