@@ -46,6 +46,15 @@ has_sudo() {
   sudo -nv 2>&1 | egrep ".*may not run sudo.*" &>/dev/null && return 1 || return 0
 }
 
+
+##################
+## ZSH OPTIONS ###
+##################
+
+setopt nobeep
+setopt kshglob
+setopt nonomatch
+
 ##################
 ## KEY BINDINGS ##
 ##################
