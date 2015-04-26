@@ -159,16 +159,6 @@ cat >> ${ZSHRC}.new <<END
     zgen oh-my-zsh plugins/web-search
 END
   ;;
-ArchLinux)
-cat >> ${ZSHRC}.new <<END
-    zgen oh-my-zsh plugins/tmux
-END
-  ;;
-Debian | Ubuntu)
-cat >> ${ZSHRC}.new <<END
-    zgen oh-my-zsh plugins/tmux
-END
-  ;;
 esac
 
 cat >> ${ZSHRC}.new <<END
