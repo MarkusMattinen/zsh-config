@@ -64,8 +64,6 @@ ArchLinux)
   has git || pacman_install git
   has zsh || pacman_install zsh
   has htop || pacman_install htop
-  has gpg-agent || pacman_install gpg-agent
-  has tmux || pacman_install tmux
   has convert || pacman_install imagemagick
   has fasd || pacman_install fasd
   ;;
@@ -73,8 +71,6 @@ Debian | Ubuntu)
   has git || apt_install git-core
   has zsh || apt_install zsh
   has htop || apt_install htop
-  has gpg-agent || apt_install gpg-agent
-  has tmux || apt_install tmux
   has convert || apt_install imagemagick
   has fasd || apt_install fasd
   ;;
@@ -101,13 +97,13 @@ if ! zgen saved; then
     zgen oh-my-zsh
     zgen oh-my-zsh plugins/catimg
     zgen oh-my-zsh plugins/fasd
-    zgen oh-my-zsh plugins/gpg-agent
     zgen oh-my-zsh plugins/last-working-dir
 END
 
 case $DISTRO in
 OSX)
 cat >> ${ZSHRC}.new <<END
+    zgen oh-my-zsh plugins/gpg-agent
     zgen oh-my-zsh plugins/web-search
 END
   ;;
