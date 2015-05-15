@@ -102,8 +102,6 @@ OSX)
   has git || brew_install git
   has zsh || brew_install zsh
   has htop || brew_install htop
-  has gpg-agent || brew_install gpg-agent
-  has gpg-connect-agent || brew_install gnupg2
   has convert || brew_install imagemagick
   has node || brew_install node
   has bower || npm_install bower
@@ -152,7 +150,6 @@ END
 case $DISTRO in
 OSX)
 cat >> ${ZSHRC}.new <<END
-    zgen oh-my-zsh plugins/gpg-agent
     zgen oh-my-zsh plugins/web-search
 END
   ;;
