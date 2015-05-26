@@ -70,7 +70,6 @@ Debian | Ubuntu)
   has zsh || apt_install zsh
   has htop || apt_install htop
   has convert || apt_install imagemagick
-  has fasd || apt_install fasd
   ;;
 esac
 
@@ -94,14 +93,19 @@ source ${ZGEN_DIR}/zgen.zsh
 if ! zgen saved; then
     zgen oh-my-zsh
     zgen oh-my-zsh plugins/catimg
-    zgen oh-my-zsh plugins/fasd
     zgen oh-my-zsh plugins/last-working-dir
 END
 
 case $DISTRO in
 OSX)
 cat >> ${ZSHRC}.new <<END
+    zgen oh-my-zsh plugins/fasd
     zgen oh-my-zsh plugins/web-search
+END
+  ;;
+ArchLinux)
+cat >> ${ZSHRC}.new <<END
+    zgen oh-my-zsh plugins/fasd
 END
   ;;
 esac
