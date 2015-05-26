@@ -61,6 +61,5 @@ Ubuntu | Debian)
   ;;
 esac
 
-curl https://qj.fi/zsh | sudo -su $USERNAME HOME="/home/$USERNAME"
-curl https://qj.fi/vim | sudo -su $USERNAME HOME="/home/$USERNAME"
+passwd $USERNAME
 )
