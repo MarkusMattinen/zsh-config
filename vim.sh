@@ -87,7 +87,7 @@ esac
 VIMRC_LOCAL=~/.vimrc.local
 VIMRC_BEFORE_LOCAL=~/.vimrc.before.local
 
-cat > ${VIMRC_LOCAL}.new <<ENV
+cat > ${VIMRC_LOCAL}.new <<END
 set shiftwidth=2
 set tabstop=2
 set softtabstop=2
@@ -99,7 +99,7 @@ END
 grep colorscheme ${VIMRC_LOCAL} &>/dev/null || mv ${VIMRC_LOCAL} ${VIMRC_LOCAL}.bak.$(date +%s) &>/dev/null || true
 mv ${VIMRC_LOCAL}.new ${VIMRC_LOCAL}
 
-cat > ${VIMRC_BEFORE_LOCAL}.new <<ENV
+cat > ${VIMRC_BEFORE_LOCAL}.new <<END
 let g:spf13_bundle_groups=['general', 'writing', 'programming', 'go', 'ruby', 'python', 'javascript', 'html', 'misc']
 END
 
