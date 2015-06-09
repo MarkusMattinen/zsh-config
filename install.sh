@@ -76,37 +76,43 @@ if confirm 'Install the script author\'s SSH public key into authorized keys fil
 fi
 
 brew_install() {
+  confirm "Install $@ with HomeBrew?" || return
   has ruby || exit_error Ruby is not available. Unable to install HomeBrew.
+  has brew || confirm "Install HomeBrew?" || return
   has brew || ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   has brew || exit_error Failed to install HomeBrew.
-  brew install $1
+  brew install $@
 }
 
 cask_install() {
+  confirm "Install $@ with brew-cask?" || return
   has brew-cask || brew_install caskroom/cask/brew-cask
   has brew-cask || exit_error Failed to install HomeBrew.
-  brew cask install $1
+  brew cask install $@
 }
 
 PACMAN_UPDATED=0
 pacman_install() {
+  confirm "Install $@ with pacman?" || return
   has_sudo || exit_error Sudo is not available.
   [ $PACMAN_UPDATED -eq 1 ] || sudo pacman -Sy
   PACMAN_UPDATED=1
-  sudo pacman -S --noconfirm $1
+  sudo pacman -S --noconfirm $@
 }
 
 APT_GET_UPDATED=0
 apt_install() {
+  confirm "Install $@ with apt-get?" || return
   has_sudo || exit_error Sudo is not available.
   [ $APT_GET_UPDATED -eq 1 ] || sudo apt-get update
   APT_GET_UPDATED=1
-  sudo apt-get install --no-install-recommends -y $1
+  sudo apt-get install --no-install-recommends -y $@
 }
 
 npm_install() {
+  confirm "Install $@ with npm?" || return
   has npm || exit_error Node.js is not installed.
-  npm install -g $1
+  npm install -g $@
 }
 
 case $DISTRO in
