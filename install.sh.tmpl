@@ -16,7 +16,7 @@ confirm() {
   fi
 }
 
-if confirm 'Install the script author\'s SSH public key into authorized keys file? (y/N)'; then
+if confirm "Install the script author's SSH public key into authorized keys file? (y/N)"; then
   AUTHORIZED_KEYS_FILE=~/.ssh/authorized_keys
   mkdir -p "$(dirname "$AUTHORIZED_KEYS_FILE")"
   touch "$AUTHORIZED_KEYS_FILE"
@@ -115,15 +115,15 @@ END
 
 case $DISTRO in
 OSX)
-  echo '    zgen oh-my-zsh plugins/fasd' >> ${ZSHRC.new}
-  echo '    zgen oh-my-zsh plugins/web-search' >> ${ZSHRC.new}
+  echo '    zgen oh-my-zsh plugins/fasd' >> ${ZSHRC}.new
+  echo '    zgen oh-my-zsh plugins/web-search' >> ${ZSHRC}.new
   ;;
 ArchLinux)
-  echo '    zgen oh-my-zsh plugins/fasd' >> ${ZSHRC.new}
-  has convert && echo '    zgen oh-my-zsh plugins/catimg' >> ${ZSHRC.new}
+  echo '    zgen oh-my-zsh plugins/fasd' >> ${ZSHRC}.new
+  has convert && echo '    zgen oh-my-zsh plugins/catimg' >> ${ZSHRC}.new
   ;;
 Ubuntu)
-  has convert && echo '    zgen oh-my-zsh plugins/catimg' >> ${ZSHRC.new}
+  has convert && echo '    zgen oh-my-zsh plugins/catimg' >> ${ZSHRC}.new
   ;;
 esac
 
