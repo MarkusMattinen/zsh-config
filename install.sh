@@ -159,21 +159,20 @@ source ${ZGEN_DIR}/zgen.zsh
 
 if ! zgen saved; then
     zgen oh-my-zsh
-    zgen oh-my-zsh plugins/catimg
     zgen oh-my-zsh plugins/last-working-dir
 END
 
 case $DISTRO in
 OSX)
-cat >> ${ZSHRC}.new <<END
-    zgen oh-my-zsh plugins/fasd
-    zgen oh-my-zsh plugins/web-search
-END
+  echo '    zgen oh-my-zsh plugins/fasd' >> ${ZSHRC.new}
+  echo '    zgen oh-my-zsh plugins/web-search' >> ${ZSHRC.new}
   ;;
 ArchLinux)
-cat >> ${ZSHRC}.new <<END
-    zgen oh-my-zsh plugins/fasd
-END
+  echo '    zgen oh-my-zsh plugins/fasd' >> ${ZSHRC.new}
+  has convert && echo '    zgen oh-my-zsh plugins/catimg' >> ${ZSHRC.new}
+  ;;
+Ubuntu)
+  has convert && echo '    zgen oh-my-zsh plugins/catimg' >> ${ZSHRC.new}
   ;;
 esac
 
