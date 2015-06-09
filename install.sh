@@ -140,11 +140,11 @@ Debian | Ubuntu)
   ;;
 esac
 
-if ! [ "$SHELL" = "$(which zsh)" ]; then
+if [ ! "$SHELL" = "$(which zsh)" ]; then
   if has_sudo; then
     sudo chsh -s $(which zsh) $(whoami)
   else
-    echo chsh -s $(which zsh) || echo Unable to change shell for $(whoami). Please run the following command manually: && echo chsh -s $(which zsh)
+    chsh -s $(which zsh) || echo Unable to change shell for $(whoami). Please run the following command manually: && echo -- chsh -s $(which zsh)
   fi
 fi
 
