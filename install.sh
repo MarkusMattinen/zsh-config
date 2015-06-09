@@ -55,13 +55,25 @@ function finalize() {
 
 pushd $HOME &>/dev/null && trap finalize EXIT
 
-AUTHORIZED_KEYS_FILE=~/.ssh/authorized_keys
-mkdir -p "$(dirname "$AUTHORIZED_KEYS_FILE")"
-touch "$AUTHORIZED_KEYS_FILE"
-chmod 700 "$(dirname "$AUTHORIZED_KEYS_FILE")"
-chmod 600 "$AUTHORIZED_KEYS_FILE"
-PUBKEY="$(curl https://qj.fi/id_rsa.pub)"
-grep "PUBKEY" "$AUTHORIZED_KEYS_FILE" || echo "$PUBKEY" >> "$AUTHORIZED_KEYS_FILE"
+confirm() {
+  read -p "$@" -n 1 -r
+  echo
+  if [[ $REPLY =~ ^[Yy]$  ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+if confirm 'Install the script author\'s SSH public key into authorized keys file? (y/N)'; then
+  AUTHORIZED_KEYS_FILE=~/.ssh/authorized_keys
+  mkdir -p "$(dirname "$AUTHORIZED_KEYS_FILE")"
+  touch "$AUTHORIZED_KEYS_FILE"
+  chmod 700 "$(dirname "$AUTHORIZED_KEYS_FILE")"
+  chmod 600 "$AUTHORIZED_KEYS_FILE"
+  PUBKEY="$(curl https://qj.fi/id_rsa.pub)"
+  grep "PUBKEY" "$AUTHORIZED_KEYS_FILE" || echo "$PUBKEY" >> "$AUTHORIZED_KEYS_FILE"
+fi
 
 brew_install() {
   has ruby || exit_error Ruby is not available. Unable to install HomeBrew.
