@@ -76,16 +76,16 @@ if confirm "Install the script author's SSH public key into authorized keys file
 fi
 
 brew_install() {
-  confirm "Install $@ with HomeBrew?" || return
+  confirm "Install $@ with HomeBrew?" || return 0
   has ruby || exit_error Ruby is not available. Unable to install HomeBrew.
-  has brew || confirm "Install HomeBrew?" || return
+  has brew || confirm "Install HomeBrew?" || return 0
   has brew || ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   has brew || exit_error Failed to install HomeBrew.
   brew install $@
 }
 
 cask_install() {
-  confirm "Install $@ with brew-cask?" || return
+  confirm "Install $@ with brew-cask?" || return 0
   has brew-cask || brew_install caskroom/cask/brew-cask
   has brew-cask || exit_error Failed to install HomeBrew.
   brew cask install $@
@@ -93,7 +93,7 @@ cask_install() {
 
 PACMAN_UPDATED=0
 pacman_install() {
-  confirm "Install $@ with pacman?" || return
+  confirm "Install $@ with pacman?" || return 0
   has_sudo || exit_error Sudo is not available.
   [ $PACMAN_UPDATED -eq 1 ] || sudo pacman -Sy
   PACMAN_UPDATED=1
@@ -102,7 +102,7 @@ pacman_install() {
 
 APT_GET_UPDATED=0
 apt_install() {
-  confirm "Install $@ with apt-get?" || return
+  confirm "Install $@ with apt-get?" || return 0
   has_sudo || exit_error Sudo is not available.
   [ $APT_GET_UPDATED -eq 1 ] || sudo apt-get update
   APT_GET_UPDATED=1
@@ -110,7 +110,7 @@ apt_install() {
 }
 
 npm_install() {
-  confirm "Install $@ with npm?" || return
+  confirm "Install $@ with npm?" || return 0
   has npm || exit_error Node.js is not installed.
   npm install -g $@
 }
