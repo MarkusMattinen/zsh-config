@@ -109,34 +109,21 @@ apt_install() {
   sudo apt-get install --no-install-recommends -y $@
 }
 
-npm_install() {
-  confirm "Install $@ with npm?" || return 0
-  has npm || exit_error Node.js is not installed.
-  npm install -g $@
-}
-
 case $DISTRO in
 OSX)
   has git || brew_install git
   has zsh || brew_install zsh
   has htop || brew_install htop
-  has convert || brew_install imagemagick
-  has node || brew_install node
-  has bower || npm_install bower
-  has fasd || brew_install fasd
   ;;
 ArchLinux)
   has git || pacman_install git
   has zsh || pacman_install zsh
   has htop || pacman_install htop
-  has convert || pacman_install imagemagick
-  has fasd || pacman_install fasd
   ;;
 Debian | Ubuntu)
   has git || apt_install git-core
   has zsh || apt_install zsh
   has htop || apt_install htop
-  has convert || apt_install imagemagick
   ;;
 esac
 
@@ -164,15 +151,11 @@ END
 
 case $DISTRO in
 OSX)
-  echo '    zgen oh-my-zsh plugins/fasd' >> ${ZSHRC}.new
   echo '    zgen oh-my-zsh plugins/web-search' >> ${ZSHRC}.new
   ;;
 ArchLinux)
-  echo '    zgen oh-my-zsh plugins/fasd' >> ${ZSHRC}.new
-  has convert && echo '    zgen oh-my-zsh plugins/catimg' >> ${ZSHRC}.new
   ;;
 Ubuntu)
-  has convert && echo '    zgen oh-my-zsh plugins/catimg' >> ${ZSHRC}.new
   ;;
 esac
 
