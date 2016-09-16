@@ -100,7 +100,7 @@ grep colorscheme ${VIMRC_LOCAL} &>/dev/null || mv ${VIMRC_LOCAL} ${VIMRC_LOCAL}.
 mv ${VIMRC_LOCAL}.new ${VIMRC_LOCAL}
 
 cat > ${VIMRC_BEFORE_LOCAL}.new <<END
-let g:spf13_bundle_groups=['general', 'writing', 'programming', 'go', 'ruby', 'python', 'javascript', 'html', 'misc']
+let g:spf13_bundle_groups=['general', 'programming', 'go', 'misc']
 END
 
 grep bundle_groups ${VIMRC_BEFORE_LOCAL} &>/dev/null || mv ${VIMRC_BEFORE_LOCAL} ${VIMRC_BEFORE_LOCAL}.bak.$(date +%s) &>/dev/null || true
