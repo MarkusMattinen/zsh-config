@@ -142,6 +142,7 @@ ZSHRC=~/.zshrc
 chmod -R go-w ${ZGEN_DIR}
 
 cat > ${ZSHRC}.new <<END
+DISABLE_AUTO_UPDATE=true
 source ${ZGEN_DIR}/zgen.zsh
 
 if ! zgen saved; then
