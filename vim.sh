@@ -94,6 +94,7 @@ set softtabstop=2
 set background=light
 let g:solarized_termcolors=16
 colorscheme solarized
+set viminfo='20,<10000,s10000
 END
 
 grep colorscheme ${VIMRC_LOCAL} &>/dev/null || mv ${VIMRC_LOCAL} ${VIMRC_LOCAL}.bak.$(date +%s) &>/dev/null || true
